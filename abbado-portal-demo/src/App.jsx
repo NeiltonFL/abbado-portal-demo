@@ -83,7 +83,11 @@ const PORTAL = {
       { type: "time", description: "Marcus Williams — Stock Purchase Agreement drafting", quantity: 3.0, rate: 325, amount: 975 },
       { type: "time", description: "Priya Patel — Cap table and corporate records", quantity: 1.0, rate: 175, amount: 175 },
     ], payments: [{ amount: 19750, method: "wire", receivedDate: "2026-03-10" }] },
-    { id: "i4", invoiceNumber: "INV-2026-0004", status: "draft", issueDate: "2026-03-10", dueDate: "2026-04-09", total: 16500, amountPaid: 0, balanceDue: 16500, matter: { matterNumber: "FL-2026-0001", name: "Series B Financing" }, lineItems: [], payments: [] },
+    { id: "i4", invoiceNumber: "INV-2026-0004", status: "sent", issueDate: "2026-03-10", dueDate: "2026-04-09", total: 16500, amountPaid: 0, balanceDue: 16500, matter: { matterNumber: "FL-2026-0004", name: "Employment Agreements" }, lineItems: [
+      { type: "time", description: "David Kim — VP Engineering employment agreement drafting", quantity: 2.5, rate: 300, amount: 750 },
+      { type: "time", description: "David Kim — California non-compete research", quantity: 2.0, rate: 300, amount: 600 },
+      { type: "expense", description: "Westlaw research — CA employment case law", quantity: 1, rate: 125, amount: 125 },
+    ], payments: [] },
     { id: "i5", invoiceNumber: "INV-2025-0015", status: "paid", issueDate: "2025-10-20", dueDate: "2025-11-19", total: 48000, amountPaid: 48000, balanceDue: 0, matter: { matterNumber: "FL-2025-0009", name: "Series A Financing" }, lineItems: [], payments: [{ amount: 48000, method: "wire", receivedDate: "2025-11-05" }] },
   ],
   entities: [
@@ -91,9 +95,9 @@ const PORTAL = {
     { id: "e2", legalName: "TechVenture IP Holdings LLC", entityType: "llc", stateOfFormation: "DE", formationDate: "2024-09-01", status: "active", registeredAgentName: "Registered Agents Inc.", officers: [{ personName: "Jamie Park", title: "Manager" }], jurisdictions: [{ state: "DE", registrationType: "domestic", status: "active" }], complianceTasks: [{ taskName: "Delaware LLC Annual Tax ($300)", dueDate: "2026-06-01", status: "pending" }] },
   ],
   matters: [
-    { matterNumber: "FL-2026-0001", name: "Series B Financing", practiceArea: "corporate", status: "open", responsibleAttorney: { firstName: "Sarah", lastName: "Chen" } },
-    { matterNumber: "FL-2026-0004", name: "Employment Agreements", practiceArea: "employment", status: "open", responsibleAttorney: { firstName: "David", lastName: "Kim" } },
-    { matterNumber: "FL-2025-0009", name: "Series A Financing", practiceArea: "corporate", status: "closed", responsibleAttorney: { firstName: "Sarah", lastName: "Chen" } },
+    { matterNumber: "FL-2026-0001", name: "Series B Financing", practiceArea: "corporate", status: "open", responsibleAttorney: { firstName: "Sarah", lastName: "Chen" }, portalVisible: true },
+    { matterNumber: "FL-2026-0004", name: "Employment Agreements", practiceArea: "employment", status: "open", responsibleAttorney: { firstName: "David", lastName: "Kim" }, portalVisible: true },
+    { matterNumber: "FL-2025-0009", name: "Series A Financing", practiceArea: "corporate", status: "closed", responsibleAttorney: { firstName: "Sarah", lastName: "Chen" }, portalVisible: false },
   ],
   documents: [
     { id: "d1", title: "Series B Term Sheet (Markup v3)", category: "contract", file: { fileName: "TermSheet_v3_markup.docx", fileSize: 245000, versionNumber: 3 }, matter: { matterNumber: "FL-2026-0001", name: "Series B Financing" }, sharedAt: "2026-03-10", message: "Latest markup with board composition revisions." },
@@ -108,26 +112,33 @@ const PORTAL = {
     { id: "msg3", senderType: "firm", subject: "Welcome to the Client Portal", body: "Welcome to the Founders Law Client Portal! You can view your invoices, entities, and shared documents here. If you need anything, just send us a message.", createdAt: "2026-03-01T09:00:00Z", readAt: "2026-03-01T09:30:00Z" },
   ],
   conversations: [
-    { id: "conv1", matterId: "FL-2026-0001", matterName: "Series B Financing", subject: "Cap Table Discussion", status: "open", lastMessageAt: "2026-03-11T10:30:00Z", messages: [
+    { id: "conv1", matterId: "FL-2026-0001", matterName: "Series B Financing", category: "matter", subject: "Cap Table Discussion", status: "open", lastMessageAt: "2026-03-11T10:30:00Z", messages: [
       { id: "cm1", senderType: "client", senderName: "You", body: "Hi Sarah — we've reviewed the cap table. A few questions:\n\n1. Can you confirm the option pool is 10% post-money?\n2. What happens to the unissued shares from Series A?\n\nThanks!", createdAt: "2026-03-09T10:15:00Z" },
       { id: "cm2", senderType: "firm", senderName: "Sarah Chen · Partner", body: "Hi Jamie,\n\n1. Yes, the option pool is 10% on a fully-diluted post-money basis. That's standard for Series B.\n2. The 412,000 unissued shares from the Series A authorization remain available.\n\nI'll send an updated version with the expansion calculations today.", createdAt: "2026-03-09T11:00:00Z" },
       { id: "cm3", senderType: "client", senderName: "You", body: "Perfect, that makes sense. Can we schedule a call Tuesday to walk through the option pool expansion with Riley?", createdAt: "2026-03-09T14:30:00Z" },
       { id: "cm4", senderType: "firm", senderName: "Sarah Chen · Partner", body: "Absolutely — I'll send a calendar invite for Tuesday at 2pm. I'll have the updated cap table ready by then.", createdAt: "2026-03-09T15:00:00Z" },
       { id: "cm5", senderType: "client", senderName: "You", body: "One more thing — Riley wants to know if we can add a 409A valuation discussion to that call too.", createdAt: "2026-03-11T10:30:00Z" },
     ]},
-    { id: "conv2", matterId: "FL-2026-0001", matterName: "Series B Financing", subject: "Board Composition — Term Sheet", status: "open", lastMessageAt: "2026-03-10T16:00:00Z", messages: [
+    { id: "conv2", matterId: "FL-2026-0001", matterName: "Series B Financing", category: "matter", subject: "Board Composition — Term Sheet", status: "open", lastMessageAt: "2026-03-10T16:00:00Z", messages: [
       { id: "cm6", senderType: "firm", senderName: "Sarah Chen · Partner", body: "Jamie — I've uploaded the v3 markup of the term sheet. The key change is in Section 4.2 (Board Composition).\n\nWe're proposing a 5-seat board: 2 founders, 2 investors, 1 independent. Sequoia originally wanted 3 investor seats.", createdAt: "2026-03-10T14:30:00Z" },
       { id: "cm7", senderType: "client", senderName: "You", body: "This looks great. Riley and I are aligned on the 5-seat structure. One question — who picks the independent director?", createdAt: "2026-03-10T15:15:00Z" },
       { id: "cm8", senderType: "firm", senderName: "Marcus Williams · Associate", body: "Hi Jamie — the independent director is mutually agreed upon by the founders and Sequoia. Neither side has a unilateral pick. Happy to walk through the protective provisions on our next call.", createdAt: "2026-03-10T16:00:00Z" },
     ]},
-    { id: "conv3", matterId: "FL-2026-0001", matterName: "Series B Financing", subject: "Due Diligence Checklist", status: "closed", lastMessageAt: "2026-03-05T09:00:00Z", messages: [
+    { id: "conv3", matterId: "FL-2026-0001", matterName: "Series B Financing", category: "matter", subject: "Due Diligence Checklist", status: "closed", lastMessageAt: "2026-03-05T09:00:00Z", messages: [
       { id: "cm9", senderType: "firm", senderName: "Priya Patel · Paralegal", body: "Hi Jamie — attached is the due diligence checklist. We'll need items 1-8 by end of week.", createdAt: "2026-03-03T09:00:00Z", attachments: [{ fileName: "DD_Checklist_TechVenture.pdf", fileSize: 245000 }] },
       { id: "cm10", senderType: "client", senderName: "You", body: "Got it, thanks Priya. I'll have our CFO pull together the financial statements.", createdAt: "2026-03-03T10:30:00Z" },
       { id: "cm11", senderType: "client", senderName: "You", body: "All items uploaded. Let me know if anything is missing.", createdAt: "2026-03-05T09:00:00Z", attachments: [{ fileName: "TechVenture_Financials_2025.pdf", fileSize: 1800000 }, { fileName: "IP_Assignment_Records.zip", fileSize: 4500000 }] },
     ]},
-    { id: "conv4", matterId: "FL-2026-0004", matterName: "Employment Agreements", subject: "VP Eng Equity Terms", status: "open", lastMessageAt: "2026-03-11T09:00:00Z", messages: [
+    { id: "conv4", matterId: "FL-2026-0004", matterName: "Employment Agreements", category: "matter", subject: "VP Eng Equity Terms", status: "open", lastMessageAt: "2026-03-11T09:00:00Z", messages: [
       { id: "cm14", senderType: "client", senderName: "You", body: "David — quick question on the VP Eng agreement. We want to offer 0.5% equity with 4-year vesting and a 1-year cliff. Is that standard?", createdAt: "2026-03-10T16:00:00Z" },
       { id: "cm15", senderType: "firm", senderName: "David Kim · Associate", body: "Jamie — 0.5% with 4/1 is very standard. I'll draft it under the existing EIP. One thing to flag: with the Series B, you'll want the 409A done before granting. I'll note that in the agreement.", createdAt: "2026-03-11T09:00:00Z" },
+    ]},
+    { id: "conv5", matterId: null, matterName: null, category: "general", subject: "Trademark Registration Question", status: "open", lastMessageAt: "2026-03-12T14:00:00Z", messages: [
+      { id: "cm16", senderType: "client", senderName: "Riley Chen", body: "Hi — we're thinking about registering the TechVenture trademark. We've been using the name for about 2 years but never formally registered. Is this something you can help with, or do we need a separate IP firm?", createdAt: "2026-03-12T14:00:00Z" },
+    ]},
+    { id: "conv6", matterId: null, matterName: null, category: "billing", subject: "Question about Invoice INV-2026-0001", status: "open", lastMessageAt: "2026-03-13T10:00:00Z", messages: [
+      { id: "cm17", senderType: "client", senderName: "You", body: "Hi Sarah — I see a line item on the latest invoice for 'Cap table and corporate records' at $175. Can you clarify what that covers?", createdAt: "2026-03-13T09:30:00Z" },
+      { id: "cm18", senderType: "firm", senderName: "Sarah Chen · Partner", body: "Good question, Jamie. That's Priya's work updating the cap table specifically for the Series B terms — incorporating the new option pool expansion and updated investor allocations. It's distinct from the Series A cap table work.", createdAt: "2026-03-13T10:00:00Z" },
     ]},
   ],
 };
@@ -339,10 +350,45 @@ const DashboardPage = ({ nav }) => {
 };
 
 // ---- INVOICES ----
-const InvoicesPage = ({ nav }) => (
+const InvoicesPage = ({ nav }) => {
+  const [showPayAll, setShowPayAll] = useState(false);
+  const outstanding = PORTAL.invoices.filter(i => i.balanceDue > 0 && i.status !== "draft");
+  const totalDue = outstanding.reduce((s, i) => s + i.balanceDue, 0);
+  const cardFee = Math.round(totalDue * 0.0314);
+
+  return (
   <div>
-    <h1 style={{ margin: "0 0 4px", fontSize: "22px", fontWeight: 700, color: T.text }}>Invoices</h1>
-    <p style={{ margin: "0 0 24px", fontSize: "13px", color: T.textMuted }}>{PORTAL.invoices.length} invoices</p>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+      <div>
+        <h1 style={{ margin: "0 0 4px", fontSize: "22px", fontWeight: 700, color: T.text }}>Invoices</h1>
+        <p style={{ margin: 0, fontSize: "13px", color: T.textMuted }}>{PORTAL.invoices.length} invoices{outstanding.length > 0 ? ` · ${outstanding.length} outstanding` : ""}</p>
+      </div>
+      {outstanding.length > 1 && (
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "11px", color: T.textMuted, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.3px" }}>Total Due</div>
+            <div style={{ fontSize: "22px", fontWeight: 800, fontFamily: T.mono, color: T.text }}>{fmt.currency(totalDue)}</div>
+          </div>
+          <Btn variant="pay" onClick={() => setShowPayAll(true)}>
+            <Icon name="card" size={15} color={C.white} /> Pay All ({fmt.currency(totalDue)})
+          </Btn>
+        </div>
+      )}
+    </div>
+
+    {/* Outstanding summary card */}
+    {outstanding.length > 0 && (
+      <Card style={{ padding: "14px 20px", marginBottom: 16, background: C.greenBg, border: "1px solid rgba(63,118,83,0.12)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 20 }}>
+            <div><div style={{ fontSize: "10px", fontWeight: 700, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.4px" }}>Outstanding</div><div style={{ fontSize: "18px", fontWeight: 700, fontFamily: T.mono, color: T.text }}>{fmt.currency(totalDue)}</div></div>
+            <div><div style={{ fontSize: "10px", fontWeight: 700, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.4px" }}>Invoices</div><div style={{ fontSize: "18px", fontWeight: 700, fontFamily: T.mono, color: T.text }}>{outstanding.length}</div></div>
+            <div><div style={{ fontSize: "10px", fontWeight: 700, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.4px" }}>Total Paid</div><div style={{ fontSize: "18px", fontWeight: 700, fontFamily: T.mono, color: C.green }}>{fmt.currency(PORTAL.invoices.reduce((s, i) => s + i.amountPaid, 0))}</div></div>
+          </div>
+        </div>
+      </Card>
+    )}
+
     {PORTAL.invoices.map(inv => (
       <Card key={inv.id} onClick={() => nav("invoice", inv.id)} style={{ padding: "18px 22px", marginBottom: 12 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -364,8 +410,97 @@ const InvoicesPage = ({ nav }) => (
         </div>
       </Card>
     ))}
+
+    {/* ── PAY ALL MODAL ── */}
+    {showPayAll && (
+      <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center" }} onClick={() => setShowPayAll(false)}>
+        <div style={{ position: "absolute", inset: 0, background: "rgba(33,59,43,0.5)", backdropFilter: "blur(8px)" }} />
+        <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: T.card, border: `1px solid ${T.border}`, borderRadius: T.radiusLg, width: 580, padding: 0, boxShadow: "0 20px 60px rgba(33,59,43,0.2)", overflow: "hidden" }}>
+          {/* Header */}
+          <div style={{ padding: "24px 28px 0" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <div style={{ fontSize: "18px", fontWeight: 700, color: T.text }}>Pay All Outstanding Invoices</div>
+                <div style={{ fontSize: "13px", color: T.textMuted, marginTop: 3 }}>{outstanding.length} invoices · {CONFIG.firm}</div>
+              </div>
+              <div style={{ cursor: "pointer", padding: "4px 8px", fontSize: "18px", color: T.textMuted }} onClick={() => setShowPayAll(false)}>✕</div>
+            </div>
+
+            {/* Invoice breakdown */}
+            <div style={{ margin: "18px 0 20px", padding: "14px 16px", background: C.greenBg, borderRadius: T.radius, border: "1px solid rgba(63,118,83,0.1)" }}>
+              {outstanding.map(inv => (
+                <div key={inv.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0", borderBottom: `1px solid rgba(63,118,83,0.08)` }}>
+                  <div>
+                    <span style={{ fontFamily: T.mono, fontSize: "12px", fontWeight: 600, color: T.text }}>{inv.invoiceNumber}</span>
+                    <span style={{ fontSize: "12px", color: T.textMuted, marginLeft: 8 }}>{inv.matter.name}</span>
+                  </div>
+                  <span style={{ fontFamily: T.mono, fontWeight: 700, color: T.text }}>{fmt.currency(inv.balanceDue)}</span>
+                </div>
+              ))}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 10, marginTop: 4 }}>
+                <span style={{ fontSize: "14px", fontWeight: 700, color: T.text }}>Total</span>
+                <span style={{ fontSize: "20px", fontWeight: 800, fontFamily: T.mono, color: C.darkGreen }}>{fmt.currency(totalDue)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment methods */}
+          <div style={{ padding: "0 28px 24px" }}>
+            <div style={{ fontSize: "12px", fontWeight: 700, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>Select Payment Method</div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              {/* ACH */}
+              <div style={{ padding: "18px 14px", borderRadius: T.radiusLg, border: `2px solid rgba(63,118,83,0.2)`, background: C.white, cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}
+                onClick={() => { setShowPayAll(false); alert("Redirecting to Stripe Checkout — ACH Bank Transfer\n\nYou'll connect your bank account via Plaid or enter your routing and account number.\n\nAmount: " + fmt.currency(totalDue) + "\nProcessing fee: $0\n\nFunds typically clear in 1-3 business days."); }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.green; e.currentTarget.style.background = C.greenBg; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(63,118,83,0.2)"; e.currentTarget.style.background = C.white; }}>
+                <div style={{ fontSize: "28px", marginBottom: 8 }}>🏦</div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: T.text }}>ACH Transfer</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, fontFamily: T.mono, color: C.darkGreen, margin: "10px 0 6px" }}>{fmt.currency(totalDue)}</div>
+                <Badge color={C.green} bg={C.greenBg}>No fee</Badge>
+                <div style={{ fontSize: "11px", color: T.textDim, marginTop: 8 }}>Connect bank via Plaid</div>
+                <div style={{ fontSize: "10px", color: T.textDim }}>1-3 business days</div>
+              </div>
+
+              {/* Wire */}
+              <div style={{ padding: "18px 14px", borderRadius: T.radiusLg, border: `2px solid rgba(63,118,83,0.2)`, background: C.white, cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}
+                onClick={() => { setShowPayAll(false); alert("Wire Transfer Instructions\n\nFounders Law IOLTA Account\nBank: First Republic Bank\nRouting: 321081669\nAccount: ****4567\n\nAmount: " + fmt.currency(totalDue) + "\nReference: " + outstanding.map(i => i.invoiceNumber).join(" + ") + "\n\nPlease include the reference number. Funds typically arrive same day or next business day."); }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.green; e.currentTarget.style.background = C.greenBg; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(63,118,83,0.2)"; e.currentTarget.style.background = C.white; }}>
+                <div style={{ fontSize: "28px", marginBottom: 8 }}>📄</div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: T.text }}>Wire Transfer</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, fontFamily: T.mono, color: C.darkGreen, margin: "10px 0 6px" }}>{fmt.currency(totalDue)}</div>
+                <Badge color={C.green} bg={C.greenBg}>No fee</Badge>
+                <div style={{ fontSize: "11px", color: T.textDim, marginTop: 8 }}>Bank details provided</div>
+                <div style={{ fontSize: "10px", color: T.textDim }}>Same day / next day</div>
+              </div>
+
+              {/* Credit Card */}
+              <div style={{ padding: "18px 14px", borderRadius: T.radiusLg, border: `2px solid ${T.border}`, background: C.white, cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}
+                onClick={() => { setShowPayAll(false); alert("Redirecting to Stripe Checkout — Credit Card\n\nInvoice total: " + fmt.currency(totalDue) + "\nProcessing fee (3.14%): " + fmt.currency(cardFee) + "\nTotal charged: " + fmt.currency(totalDue + cardFee) + "\n\nPayment is instant. A 3.14% surcharge is added to cover credit card processing costs."); }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.orange; e.currentTarget.style.background = "rgba(212,133,31,0.04)"; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.background = C.white; }}>
+                <div style={{ fontSize: "28px", marginBottom: 8 }}>💳</div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: T.text }}>Credit Card</div>
+                <div style={{ fontSize: "22px", fontWeight: 800, fontFamily: T.mono, color: T.text, margin: "10px 0 6px" }}>{fmt.currency(totalDue + cardFee)}</div>
+                <Badge color={C.orange} bg={C.orangeBg}>+{fmt.currency(cardFee)} fee</Badge>
+                <div style={{ fontSize: "11px", color: T.textDim, marginTop: 8 }}>Includes 3.14% surcharge</div>
+                <div style={{ fontSize: "10px", color: T.textDim }}>Instant</div>
+              </div>
+            </div>
+
+            <div style={{ fontSize: "11px", color: T.textDim, marginTop: 16, lineHeight: 1.6, textAlign: "center" }}>
+              All payments processed securely through Stripe. ACH and wire transfers incur no processing fees.<br />
+              A 3.14% surcharge applies to credit card payments to cover processing costs.
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
-);
+  );
+};
+
 
 // ---- INVOICE DETAIL ----
 const InvoiceDetailPage = ({ invoiceId, nav }) => {
@@ -439,16 +574,53 @@ const InvoiceDetailPage = ({ invoiceId, nav }) => {
         )}
       </Card>
 
-      {/* Pay button */}
+      {/* Payment options */}
       {inv.balanceDue > 0 && inv.status !== "draft" && (
-        <Card style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", background: C.greenBg, border: `1px solid rgba(63,118,83,0.15)` }}>
-          <div>
-            <div style={{ fontSize: "15px", fontWeight: 700, color: T.text }}>Pay {fmt.currency(inv.balanceDue)}</div>
-            <div style={{ fontSize: "12px", color: T.textMuted, marginTop: 2 }}>Secure payment powered by Stripe</div>
+        <Card style={{ padding: "22px 26px", background: C.greenBg, border: `1px solid rgba(63,118,83,0.15)` }}>
+          <div style={{ fontSize: "15px", fontWeight: 700, color: T.text, marginBottom: 4 }}>Pay {fmt.currency(inv.balanceDue)}</div>
+          <div style={{ fontSize: "12px", color: T.textMuted, marginBottom: 16 }}>Choose your payment method. ACH and wire transfers have no processing fees.</div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+            {/* ACH */}
+            <div style={{ padding: "16px 14px", borderRadius: T.radiusLg, border: `2px solid rgba(63,118,83,0.2)`, background: C.white, cursor: "pointer", textAlign: "center" }}
+              onClick={() => alert("This would open Stripe Checkout with ACH Direct Debit (us_bank_account) — connect via Plaid or enter routing + account number")}
+              onMouseEnter={e => e.currentTarget.style.borderColor = C.green}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(63,118,83,0.2)"}>
+              <div style={{ fontSize: "20px", marginBottom: 6 }}>🏦</div>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: T.text }}>ACH Bank Transfer</div>
+              <div style={{ fontSize: "20px", fontWeight: 800, fontFamily: T.mono, color: C.darkGreen, margin: "8px 0 4px" }}>{fmt.currency(inv.balanceDue)}</div>
+              <div style={{ fontSize: "11px", color: C.green, fontWeight: 600 }}>No processing fee</div>
+              <div style={{ fontSize: "10px", color: T.textDim, marginTop: 4 }}>1-3 business days</div>
+            </div>
+
+            {/* Wire */}
+            <div style={{ padding: "16px 14px", borderRadius: T.radiusLg, border: `2px solid rgba(63,118,83,0.2)`, background: C.white, cursor: "pointer", textAlign: "center" }}
+              onClick={() => alert("This would show wire transfer instructions:\n\nBank: First Republic Bank\nRouting: 321081669\nAccount: ****4567\nReference: " + inv.invoiceNumber)}
+              onMouseEnter={e => e.currentTarget.style.borderColor = C.green}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(63,118,83,0.2)"}>
+              <div style={{ fontSize: "20px", marginBottom: 6 }}>📄</div>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: T.text }}>Wire Transfer</div>
+              <div style={{ fontSize: "20px", fontWeight: 800, fontFamily: T.mono, color: C.darkGreen, margin: "8px 0 4px" }}>{fmt.currency(inv.balanceDue)}</div>
+              <div style={{ fontSize: "11px", color: C.green, fontWeight: 600 }}>No processing fee</div>
+              <div style={{ fontSize: "10px", color: T.textDim, marginTop: 4 }}>Same day / next day</div>
+            </div>
+
+            {/* Credit Card */}
+            <div style={{ padding: "16px 14px", borderRadius: T.radiusLg, border: `2px solid ${T.border}`, background: C.white, cursor: "pointer", textAlign: "center" }}
+              onClick={() => alert(`This would open Stripe Checkout with credit card.\n\nInvoice: ${fmt.currency(inv.balanceDue)}\nProcessing fee (3.14%): ${fmt.currency(Math.round(inv.balanceDue * 0.0314))}\nTotal: ${fmt.currency(inv.balanceDue + Math.round(inv.balanceDue * 0.0314))}`)}
+              onMouseEnter={e => e.currentTarget.style.borderColor = C.orange}
+              onMouseLeave={e => e.currentTarget.style.borderColor = T.border}>
+              <div style={{ fontSize: "20px", marginBottom: 6 }}>💳</div>
+              <div style={{ fontSize: "13px", fontWeight: 700, color: T.text }}>Credit Card</div>
+              <div style={{ fontSize: "20px", fontWeight: 800, fontFamily: T.mono, color: T.text, margin: "8px 0 4px" }}>{fmt.currency(inv.balanceDue + Math.round(inv.balanceDue * 0.0314))}</div>
+              <div style={{ fontSize: "11px", color: C.orange, fontWeight: 600 }}>Includes 3.14% processing fee</div>
+              <div style={{ fontSize: "10px", color: T.textDim, marginTop: 4 }}>Instant</div>
+            </div>
           </div>
-          <Btn variant="pay" onClick={() => alert("This would redirect to Stripe Checkout")}>
-            <Icon name="card" size={16} color={C.white} /> Pay Now
-          </Btn>
+
+          <div style={{ fontSize: "11px", color: T.textDim, marginTop: 12, lineHeight: 1.5 }}>
+            All payments are processed securely through Stripe. ACH and wire transfers incur no processing fees. A 3.14% surcharge applies to credit card payments to cover processing costs. Wire transfer instructions will be displayed after selection.
+          </div>
         </Card>
       )}
     </div>
@@ -532,7 +704,7 @@ const DocumentsPage = () => (
               {doc.message && <div style={{ fontSize: "12px", color: T.textSec, marginTop: 4, fontStyle: "italic", background: C.greenBg, padding: "4px 8px", borderRadius: 4, display: "inline-block" }}>"{doc.message}"</div>}
             </div>
           </div>
-          <Btn variant="outline" style={{ padding: "8px 14px", fontSize: "12px" }}>
+          <Btn variant="outline" style={{ padding: "8px 14px", fontSize: "12px" }} onClick={() => alert("File picker would open — attach documents to this reply")}>
             <Icon name="download" size={14} color={C.darkGreen} /> Download
           </Btn>
         </div>
@@ -550,7 +722,11 @@ const MessagesPage = () => {
   const [showNewThread, setShowNewThread] = useState(false);
 
   const convsByMatter = {};
+  const generalConvs = [];
+  const billingConvs = [];
   PORTAL.conversations.forEach(c => {
+    if (c.category === "general") { generalConvs.push(c); return; }
+    if (c.category === "billing") { billingConvs.push(c); return; }
     if (!convsByMatter[c.matterId]) convsByMatter[c.matterId] = { matterNumber: c.matterId, matterName: c.matterName, convs: [] };
     convsByMatter[c.matterId].convs.push(c);
   });
@@ -571,8 +747,63 @@ const MessagesPage = () => {
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 16, minHeight: 500 }}>
-        {/* Thread list grouped by matter */}
+        {/* Thread list grouped by category then matter */}
         <div style={{ overflow: "auto", maxHeight: "75vh" }}>
+          {/* General inquiries */}
+          {generalConvs.length > 0 && (
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: C.turquoise, textTransform: "uppercase", letterSpacing: "0.6px", padding: "0 12px 6px", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon name="message" size={12} color={C.turquoise} />
+                New Questions
+              </div>
+              {generalConvs.map(conv => {
+                const isSelected = selectedConvId === conv.id;
+                const lastMsg = conv.messages[conv.messages.length - 1];
+                const unread = conv.status === "open" && lastMsg?.senderType === "firm";
+                return (
+                  <div key={conv.id} onClick={() => { setSelectedConvId(conv.id); setReplyText(""); }}
+                    style={{ padding: "12px 14px", borderRadius: T.radius, marginBottom: 3, cursor: "pointer", background: isSelected ? C.blueBg : "transparent", border: `1px solid ${isSelected ? "rgba(74,153,167,0.2)" : "transparent"}`, transition: "all 0.15s" }}
+                    onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = "rgba(74,153,167,0.04)"; }}
+                    onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = isSelected ? C.blueBg : "transparent"; }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
+                      {unread && <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.turquoise, flexShrink: 0 }} />}
+                      <span style={{ fontSize: "13px", fontWeight: unread ? 700 : 600, color: T.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{conv.subject}</span>
+                    </div>
+                    <div style={{ fontSize: "11px", color: T.textMuted }}>{conv.messages.length} message{conv.messages.length !== 1 ? "s" : ""} · {fmt.relative(conv.lastMessageAt)}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Billing inquiries */}
+          {billingConvs.length > 0 && (
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: C.orange, textTransform: "uppercase", letterSpacing: "0.6px", padding: "0 12px 6px", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon name="invoice" size={12} color={C.orange} />
+                Billing
+              </div>
+              {billingConvs.map(conv => {
+                const isSelected = selectedConvId === conv.id;
+                const lastMsg = conv.messages[conv.messages.length - 1];
+                const unread = conv.status === "open" && lastMsg?.senderType === "firm";
+                return (
+                  <div key={conv.id} onClick={() => { setSelectedConvId(conv.id); setReplyText(""); }}
+                    style={{ padding: "12px 14px", borderRadius: T.radius, marginBottom: 3, cursor: "pointer", background: isSelected ? C.orangeBg : "transparent", border: `1px solid ${isSelected ? "rgba(212,133,31,0.2)" : "transparent"}`, transition: "all 0.15s" }}
+                    onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = "rgba(212,133,31,0.04)"; }}
+                    onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = isSelected ? C.orangeBg : "transparent"; }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
+                      {unread && <div style={{ width: 7, height: 7, borderRadius: "50%", background: C.orange, flexShrink: 0 }} />}
+                      <span style={{ fontSize: "13px", fontWeight: unread ? 700 : 600, color: T.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{conv.subject}</span>
+                    </div>
+                    <div style={{ fontSize: "11px", color: T.textMuted }}>{conv.messages.length} message{conv.messages.length !== 1 ? "s" : ""} · {fmt.relative(conv.lastMessageAt)}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Matter-scoped conversations */}
           {Object.values(convsByMatter).map(group => (
             <div key={group.matterNumber} style={{ marginBottom: 16 }}>
               <div style={{ fontSize: "11px", fontWeight: 700, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.6px", padding: "0 12px 6px", display: "flex", alignItems: "center", gap: 6 }}>
@@ -655,10 +886,10 @@ const MessagesPage = () => {
                   onFocus={e => e.target.style.borderColor = C.green}
                   onBlur={e => e.target.style.borderColor = T.border} />
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <Btn variant="outline" style={{ fontSize: "12px", padding: "7px 14px" }}>
+                  <Btn variant="outline" style={{ fontSize: "12px", padding: "7px 14px" }} onClick={() => alert("File picker would open — attach documents to this reply")}>
                     <Icon name="external" size={13} color={C.darkGreen} /> Attach File
                   </Btn>
-                  <Btn disabled={!replyText.trim()}>
+                  <Btn disabled={!replyText.trim()} onClick={() => { alert("Reply sent"); setReplyText(""); }}>
                     <Icon name="send" size={14} color={C.cream} /> Send Reply
                   </Btn>
                 </div>
@@ -680,47 +911,98 @@ const MessagesPage = () => {
         )}
       </div>
 
-      {/* New Thread Modal */}
+      {/* New Thread Modal — Three Category Picker */}
       {showNewThread && (
         <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center" }} onClick={() => setShowNewThread(false)}>
           <div style={{ position: "absolute", inset: 0, background: "rgba(33,59,43,0.4)", backdropFilter: "blur(6px)" }} />
-          <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: T.card, border: `1px solid ${T.border}`, borderRadius: T.radiusLg, width: 480, padding: 28, boxShadow: "0 12px 40px rgba(33,59,43,0.12)" }}>
-            <h3 style={{ margin: "0 0 18px", fontSize: "18px", fontWeight: 700, color: T.text }}>New Conversation</h3>
-            <div style={{ marginBottom: 14 }}>
-              <div style={{ fontSize: "12px", fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>Matter</div>
-              <select value={newThreadMatter} onChange={e => setNewThreadMatter(e.target.value)}
-                style={{ width: "100%", padding: "10px 14px", border: `1.5px solid ${T.border}`, borderRadius: T.radius, fontSize: "14px", fontFamily: T.font, color: T.text, background: T.card }}>
-                <option value="">Select a matter...</option>
-                {PORTAL.matters.filter(m => m.status === "open").map(m => (
-                  <option key={m.matterNumber} value={m.matterNumber}>{m.matterNumber} — {m.name}</option>
-                ))}
-              </select>
+          <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: T.card, border: `1px solid ${T.border}`, borderRadius: T.radiusLg, width: 520, padding: 28, boxShadow: "0 12px 40px rgba(33,59,43,0.12)" }}>
+            <h3 style={{ margin: "0 0 6px", fontSize: "18px", fontWeight: 700, color: T.text }}>New Conversation</h3>
+            <p style={{ margin: "0 0 20px", fontSize: "13px", color: T.textMuted }}>What would you like to discuss?</p>
+
+            {/* Category picker */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 18 }}>
+              {[
+                { id: "general", label: "New Question", desc: "Ask about a new topic or service", icon: "message", color: C.turquoise, bg: C.blueBg },
+                { id: "billing", label: "Billing Inquiry", desc: "Questions about invoices or payments", icon: "invoice", color: C.orange, bg: C.orangeBg },
+                { id: "matter", label: "Existing Matter", desc: "About a specific active matter", icon: "building", color: C.green, bg: C.greenBg },
+              ].map(cat => (
+                <div key={cat.id} onClick={() => setNewThreadMatter(cat.id === "matter" ? "__pick__" : cat.id)}
+                  style={{ padding: "16px 14px", borderRadius: T.radiusLg, border: `2px solid ${(newThreadMatter === cat.id || (cat.id === "matter" && newThreadMatter && newThreadMatter !== "general" && newThreadMatter !== "billing")) ? cat.color : T.border}`, cursor: "pointer", textAlign: "center", transition: "all 0.15s", background: (newThreadMatter === cat.id || (cat.id === "matter" && newThreadMatter && newThreadMatter !== "general" && newThreadMatter !== "billing" && newThreadMatter !== "__pick__")) ? cat.bg : "transparent" }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = cat.color}
+                  onMouseLeave={e => { const sel = newThreadMatter === cat.id || (cat.id === "matter" && newThreadMatter && !["general","billing"].includes(newThreadMatter)); if (!sel) e.currentTarget.style.borderColor = T.border; }}>
+                  <Icon name={cat.icon} size={22} color={cat.color} />
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: T.text, marginTop: 8 }}>{cat.label}</div>
+                  <div style={{ fontSize: "11px", color: T.textMuted, marginTop: 3 }}>{cat.desc}</div>
+                </div>
+              ))}
             </div>
-            <div style={{ marginBottom: 14 }}>
-              <div style={{ fontSize: "12px", fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>Subject</div>
-              <input value={newThreadSubject} onChange={e => setNewThreadSubject(e.target.value)} placeholder="e.g., Question about vesting schedule"
-                style={{ width: "100%", padding: "10px 14px", border: `1.5px solid ${T.border}`, borderRadius: T.radius, fontSize: "14px", fontFamily: T.font, color: T.text, outline: "none", boxSizing: "border-box" }}
-                onFocus={e => e.target.style.borderColor = C.green}
-                onBlur={e => e.target.style.borderColor = T.border} />
-            </div>
-            <div style={{ marginBottom: 18 }}>
-              <div style={{ fontSize: "12px", fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>Message</div>
-              <textarea placeholder="Type your message..." rows={4}
-                style={{ width: "100%", padding: "10px 14px", border: `1.5px solid ${T.border}`, borderRadius: T.radius, fontSize: "14px", fontFamily: T.font, color: T.text, resize: "vertical", outline: "none", boxSizing: "border-box" }}
-                onFocus={e => e.target.style.borderColor = C.green}
-                onBlur={e => e.target.style.borderColor = T.border} />
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Btn variant="outline" style={{ fontSize: "12px", padding: "8px 14px" }}>
-                <Icon name="external" size={13} color={C.darkGreen} /> Attach File
-              </Btn>
-              <div style={{ display: "flex", gap: 10 }}>
-                <Btn variant="ghost" onClick={() => setShowNewThread(false)}>Cancel</Btn>
-                <Btn disabled={!newThreadMatter || !newThreadSubject.trim()} onClick={() => setShowNewThread(false)}>
-                  <Icon name="send" size={14} color={C.cream} /> Start Conversation
-                </Btn>
+
+            {/* Matter picker (only for Existing Matter) */}
+            {newThreadMatter === "__pick__" && (
+              <div style={{ marginBottom: 14 }}>
+                <div style={{ fontSize: "12px", fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>Select Matter</div>
+                <select onChange={e => setNewThreadMatter(e.target.value)}
+                  style={{ width: "100%", padding: "10px 14px", border: `1.5px solid ${T.border}`, borderRadius: T.radius, fontSize: "14px", fontFamily: T.font, color: T.text, background: T.card }}>
+                  <option value="__pick__">Choose a matter...</option>
+                  {PORTAL.matters.filter(m => m.portalVisible && m.status === "open").map(m => (
+                    <option key={m.matterNumber} value={m.matterNumber}>{m.matterNumber} — {m.name} (Lead: {m.responsibleAttorney.firstName} {m.responsibleAttorney.lastName})</option>
+                  ))}
+                </select>
               </div>
-            </div>
+            )}
+
+            {/* Routing indicator */}
+            {newThreadMatter && newThreadMatter !== "__pick__" && (() => {
+              const isGeneral = newThreadMatter === "general";
+              const isBilling = newThreadMatter === "billing";
+              const selectedMatter = !isGeneral && !isBilling ? PORTAL.matters.find(m => m.matterNumber === newThreadMatter) : null;
+              const routeTo = isGeneral ? "Sarah Chen (Responsible Attorney)" : isBilling ? "Billing Team" : selectedMatter ? `${selectedMatter.responsibleAttorney.firstName} ${selectedMatter.responsibleAttorney.lastName} (Lead Attorney)` : "";
+              const routeColor = isGeneral ? C.turquoise : isBilling ? C.orange : C.green;
+              return (
+                <div style={{ padding: "8px 12px", borderRadius: T.radius, background: "rgba(252,248,241,0.8)", border: `1px solid ${T.border}`, marginBottom: 14, display: "flex", alignItems: "center", gap: 8 }}>
+                  <Icon name="send" size={12} color={routeColor} />
+                  <span style={{ fontSize: "12px", color: T.textMuted }}>This message will be sent to <strong style={{ color: T.text }}>{routeTo}</strong></span>
+                </div>
+              );
+            })()}
+
+            {/* Subject + Message (shown once category is picked) */}
+            {newThreadMatter && newThreadMatter !== "__pick__" && (
+              <>
+                <div style={{ marginBottom: 14 }}>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>Subject</div>
+                  <input value={newThreadSubject} onChange={e => setNewThreadSubject(e.target.value)}
+                    placeholder={newThreadMatter === "billing" ? "e.g., Question about latest invoice" : newThreadMatter === "general" ? "e.g., Interested in trademark registration" : "e.g., Question about vesting schedule"}
+                    style={{ width: "100%", padding: "10px 14px", border: `1.5px solid ${T.border}`, borderRadius: T.radius, fontSize: "14px", fontFamily: T.font, color: T.text, outline: "none", boxSizing: "border-box" }}
+                    onFocus={e => e.target.style.borderColor = C.green}
+                    onBlur={e => e.target.style.borderColor = T.border} />
+                </div>
+                <div style={{ marginBottom: 18 }}>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6 }}>Message</div>
+                  <textarea placeholder="Type your message..." rows={4}
+                    style={{ width: "100%", padding: "10px 14px", border: `1.5px solid ${T.border}`, borderRadius: T.radius, fontSize: "14px", fontFamily: T.font, color: T.text, resize: "vertical", outline: "none", boxSizing: "border-box" }}
+                    onFocus={e => e.target.style.borderColor = C.green}
+                    onBlur={e => e.target.style.borderColor = T.border} />
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <Btn variant="outline" style={{ fontSize: "12px", padding: "8px 14px" }} onClick={() => alert("File picker would open — attach files to this new conversation")}>
+                    <Icon name="external" size={13} color={C.darkGreen} /> Attach File
+                  </Btn>
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <Btn variant="ghost" onClick={() => { setShowNewThread(false); setNewThreadMatter(""); setNewThreadSubject(""); }}>Cancel</Btn>
+                    <Btn disabled={!newThreadSubject.trim()} onClick={() => { setShowNewThread(false); setNewThreadMatter(""); setNewThreadSubject(""); }}>
+                      <Icon name="send" size={14} color={C.cream} /> Start Conversation
+                    </Btn>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {!newThreadMatter && (
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Btn variant="ghost" onClick={() => setShowNewThread(false)}>Cancel</Btn>
+              </div>
+            )}
           </div>
         </div>
       )}
